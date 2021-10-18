@@ -12,7 +12,7 @@ services:
     restart: always
 
   jupyter:
-    build: ./notebook
+    build: ./base-notebook
     environment:
       - DB_HOSTNAME=postgres
       - DB_USERNAME=opendatacube
@@ -22,9 +22,12 @@ services:
       - STAC_API_URL=https://earth-search.aws.element84.com/v0/
     ports:
       - "8000:8888"
-        #- "8787:8787"
-    user: root
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres
     volumes:
-      - ./notebooks:/notebooks
+      - ./example-notebooks:/notebooks
     restart: always
     command: jupyter notebook --allow-root --ip="0.0.0.0" --NotebookApp.token='secretpassword'
+

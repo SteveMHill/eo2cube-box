@@ -41,8 +41,6 @@ RUN adduser --disabled-password \
     $USER
 
 
-USER $USER
-
 ENV MINICONDA_VERSION latest
 ENV CONDA_DIR $HOME/miniconda3
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -O ~/miniconda.sh && \
@@ -86,9 +84,13 @@ RUN mamba install --quiet --yes \
     jupyter lab clean && \
     rm -rf /home/$NB_USER/.cache/yarn 
 
-RUN pip3 install ciso8601 psycopg2-binary~=2.8.6 odc-algo odc-cloud odc-dscache odc-io odc-stats odc-ui odc-apps-dc-tools odc-stac
+RUN pip3 install ciso8601 psycopg2-binary~=2.8.6 odc-algo odc-cloud odc-dscache odc-io odc-stats odc-ui odc-stac
+RUN pip3 install --extra-index-url="https://packages.dea.ga.gov.au" odc-apps-dc-tools
 
-RUN mkdir $HOME/jupter
-WORKDIR $HOME/jupter
+USER $USER
+RUN mkdir $HOME/products
+COPY products $HOME/products
+RUN mkdir $HOME/jupyter
+WORKDIR $HOME/jupyter
 
 CMD [ "jupyter", "lab", "--no-browser", "--ip", "0.0.0.0" ]
