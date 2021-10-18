@@ -6,8 +6,11 @@ SHELL [ "/bin/bash", "--login", "-c" ]
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -q update \
- && apt-get install -yq --no-install-recommends build-essential \
+ && apt-get install -yq  build-essential \
+    libpq-dev \
+    gcc \
     wget \
+    python3.9 \
     python3-pip \
     ca-certificates \
     sudo \
@@ -83,7 +86,9 @@ RUN mamba install --quiet --yes \
     jupyter lab clean && \
     rm -rf /home/$NB_USER/.cache/yarn 
 
-RUN pip3 install ciso8601 psycopg2-binary odc-algo odc-cloud odc-dscache odc-io odc-stats odc-ui odc-apps-dc-tools odc-stac
-WORKDIR $HOME
+RUN pip3 install ciso8601 psycopg2-binary~=2.8.6 odc-algo odc-cloud odc-dscache odc-io odc-stats odc-ui odc-apps-dc-tools odc-stac
+
+RUN mkdir $HOME/jupter
+WORKDIR $HOME/jupter
 
 CMD [ "jupyter", "lab", "--no-browser", "--ip", "0.0.0.0" ]

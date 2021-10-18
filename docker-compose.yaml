@@ -21,8 +21,8 @@ services:
       - AWS_NO_SIGN_REQUEST=true
       - STAC_API_URL=https://earth-search.aws.element84.com/v0/
     ports:
-      - "80:8888"
-      #- "8787:8787"
+      - "8000:8888"
+        #- "8787:8787"
     user: root
     volumes:
       - ./notebooks:/notebooks
