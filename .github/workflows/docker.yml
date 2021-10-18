@@ -1,0 +1,27 @@
+name: Docker Test
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+      
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+      
+    - name: Database init
+      run: docker-compose exec -T jupyter datacube -v system init
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
