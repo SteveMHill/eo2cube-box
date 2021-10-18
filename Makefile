@@ -24,7 +24,7 @@ init:
 	docker-compose exec -T jupyter datacube -v system init
 
 s2_product:
-	docker-compose exec -T jupyter datacube -v product add ../products/s2_l2a.yaml
+	docker-compose exec -T jupyter datacube -v product add products/s2_l2a.yaml
 
 s2_index:
 	docker-compose exec -T jupyter bash -c "stac-to-dc \

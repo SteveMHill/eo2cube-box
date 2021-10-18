@@ -42,7 +42,7 @@ RUN adduser --disabled-password \
 
 
 ENV MINICONDA_VERSION latest
-ENV CONDA_DIR $HOME/miniconda3
+ENV CONDA_DIR /root/miniconda3
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -O ~/miniconda.sh && \
     chmod +x ~/miniconda.sh && \
     ~/miniconda.sh -b -p $CONDA_DIR && \
@@ -50,6 +50,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSI
 
 ENV PATH=$CONDA_DIR/bin:$PATH
 RUN echo ". $CONDA_DIR/etc/profile.d/conda.sh" >> ~/.profile
+#RUN export PATH="/root/miniconda3/bin:$PATH"
 RUN conda init bash
 
 RUN conda update --name base --channel defaults conda && \
@@ -90,7 +91,8 @@ RUN pip3 install --extra-index-url="https://packages.dea.ga.gov.au" odc-apps-dc-
 USER $USER
 RUN mkdir $HOME/products
 COPY products $HOME/products
-RUN mkdir $HOME/jupyter
-WORKDIR $HOME/jupyter
+RUN mkdir $HOME/notebooks
+
+WORKDIR $HOME
 
 CMD [ "jupyter", "lab", "--no-browser", "--ip", "0.0.0.0" ]
