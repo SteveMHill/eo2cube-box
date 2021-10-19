@@ -27,6 +27,7 @@ services:
     links:
       - postgres:postgres
     volumes:
+      - ./products:/home/datacube/products
       - ./example-notebooks:/home/datacube/notebooks
     restart: always
     command: jupyter notebook --allow-root --ip="0.0.0.0" --NotebookApp.token='secretpassword'

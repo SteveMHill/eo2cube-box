@@ -9,6 +9,7 @@ RUN apt-get -q update \
  && apt-get install -yq  build-essential \
     libpq-dev \
     gcc \
+    vim \
     wget \
     python3.9 \
     python3-pip \
@@ -90,7 +91,6 @@ RUN pip3 install --extra-index-url="https://packages.dea.ga.gov.au" odc-apps-dc-
 
 USER $USER
 RUN mkdir $HOME/products
-COPY products $HOME/products
 RUN mkdir $HOME/notebooks
 
 WORKDIR $HOME
