@@ -16,19 +16,6 @@ jobs:
     - name: Start containers
       run: docker-compose -f "docker-compose.yml" up -d --build
       
-    - name: Database init
-      run: docker-compose exec -T jupyter datacube -v system init
-      
-    - name: Add s2_l2a product
-      run:  docker-compose exec -T jupyter datacube -v product add products/s2_l2a.yaml
-      
-    - name: Test index
-      run:  docker-compose exec -T jupyter bash -c "stac-to-dc \
-                        --bbox='9.80,49.70,10.1,49.85' \
-                        --catalog-href='https://earth-search.aws.element84.com/v0/' \
-                        --collections='sentinel-s2-l2a-cogs' \
-                        --datetime='2021-06-01/2021-07-01'"
-      
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose.yml" down
