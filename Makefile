@@ -52,12 +52,12 @@ nasadem_index:
 			--bbox='$(BBOX)'"
 
 landsat_sr_product:
-	docker-compose exec -T jupyter datacube -v product add products/landsat_c2l2_sr.yml
+	docker-compose exec -T jupyter datacube -v product add products/landsat_8_c2_l2.yml
 
 landsat_sr_index: 
 	docker-compose exec -T jupyter bash -c "stac-to-dc \
                 	--bbox='9.80,49.70,10.1,49.85' \
-                   	--catalog-href='https://landsatlook.usgs.gov/stac-server' \
-                    	--collections='landsat-c2l2-sr' \
-                    	--datetime='2021-06-01/2021-07-01'"
+                   	--catalog-href='https://planetarycomputer.microsoft.com/api/stac/v1' \
+                    	--collections='landsat-8-c2-l2' \
+                    	--datetime='2021-06-01/2021-07-01' "
 
